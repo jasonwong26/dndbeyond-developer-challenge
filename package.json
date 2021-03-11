@@ -1,0 +1,19 @@
+{
+  "name": "dndbeyond-developer-challenge-developer-challenge",
+  "version": "0.0.1",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonwong26/dndbeyond-developer-challenge-developer-challenge"
+  },
+  "author": "Jason Wong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonwong26/dndbeyond-developer-challenge-developer-challenge/issues"
+  },
+  "homepage": "https://github.com/jasonwong26/dndbeyond-developer-challenge-developer-challenge#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^26.0.20"
+  }
+}

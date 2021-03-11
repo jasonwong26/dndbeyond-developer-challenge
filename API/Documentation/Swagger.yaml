@@ -1,0 +1,395 @@
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "Character HP API"
+tags:
+- name: "character"
+schemes:
+- "http"
+- "https"
+paths:
+  /character:
+    post:
+      tags:
+      - "character"
+      summary: "Create a character"
+      operationId: "addCharacter"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Character object to be created"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateCharacterRequest"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Character"
+        "405":
+          description: "Invalid input"
+  /character/{characterId}:
+    get:
+      tags:
+      - "character"
+      summary: "get a character by ID"
+      operationId: "getCharacterById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "characterId"
+        in: "path"
+        description: "ID of character to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Character"
+        "404":
+          description: "Character not found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  /character/{characterId}/hp:
+    get:
+      tags:
+      - "character"
+      summary: "get character HP"
+      operationId: "getCharacterHp"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "characterId"
+        in: "path"
+        description: "ID of character's HP to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CharacterHp"
+        "404":
+          description: "Character not found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+    post:
+      tags:
+      - "character"
+      summary: "update a character's HP"
+      operationId: "updateCharacterHp"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "characterId"
+        in: "path"
+        description: "ID of character's HP to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        description: "Request to update Character's hp"
+        required: true
+        schema:
+          $ref: "#/definitions/CharacterHpRequest"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CharacterHp"
+        "404":
+          description: "Character not found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  /character/{characterId}/hp/updateTemp:
+    post:
+      tags:
+      - "character"
+      summary: "update a character's Temp HP"
+      operationId: "updateCharacterTempHp"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "characterId"
+        in: "path"
+        description: "ID of character's HP to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        description: "Request to update Character's Temp hp"
+        required: true
+        schema:
+          $ref: "#/definitions/CharacterHpRequest"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CharacterHp"
+        "404":
+          description: "Character not found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+
+definitions:
+  Character:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "VlgUNaf-Q"
+      name:
+        type: "string"
+        example: "Briv"
+      level:
+        type: "integer"
+        format: "int64"
+        example: 5
+      hp:
+        type: "integer"
+        format: "int64"
+        example: 23
+      maxHp:
+        type: "integer"
+        format: "int64"
+        example: 23
+      tempHp:
+        type: "integer"
+        format: "int64"
+        example: 0
+
+      classes:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              example: "fighter"
+            hitDiceValue:
+              type: "integer"
+              format: "int64"
+              example: 10
+            classLevel:
+              type: "integer"
+              format: "int64"
+              example: 3
+      stats:
+        type: "object"
+        properties:
+          strength:
+            type: "integer"
+            format: "int64"
+            example: 15          
+          dexterity:
+            type: "integer"
+            format: "int64"
+            example: 12          
+          constitution:
+            type: "integer"
+            format: "int64"
+            example: 14          
+          intelligence:
+            type: "integer"
+            format: "int64"
+            example: 13          
+          wisdom:
+            type: "integer"
+            format: "int64"
+            example: 10          
+          charisma:
+            type: "integer"
+            format: "int64"
+            example: 8          
+      items:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              example: "Ioun Stone of Fortitude"
+            modifier:
+              type: "object"
+              properties:
+                affectedObject:
+                  type: "string"
+                  example: "stats"
+                affectedValue:
+                  type: "string"
+                  example: "constitution"
+                value:
+                  type: "integer"
+                  format: "int64"
+                  example: 2          
+      defenses:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              example: "fire"
+              enum:
+              - "slashing"
+              - "bludgeoning"
+              - "piercing"
+              - "fire"
+              - "cold"
+            defense:
+              type: "string"
+              enum:
+              - "immunity"
+              - "resistance"
+              - "vulnerable"
+              example: "immunity"
+  CreateCharacterRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Briv"
+      level:
+        type: "integer"
+        format: "int64"
+        example: 5
+      classes:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              example: "fighter"
+            hitDiceValue:
+              type: "integer"
+              format: "int64"
+              example: 10
+            classLevel:
+              type: "integer"
+              format: "int64"
+              example: 3
+      stats:
+        type: "object"
+        properties:
+          strength:
+            type: "integer"
+            format: "int64"
+            example: 15          
+          dexterity:
+            type: "integer"
+            format: "int64"
+            example: 12          
+          constitution:
+            type: "integer"
+            format: "int64"
+            example: 14          
+          intelligence:
+            type: "integer"
+            format: "int64"
+            example: 13          
+          wisdom:
+            type: "integer"
+            format: "int64"
+            example: 10          
+          charisma:
+            type: "integer"
+            format: "int64"
+            example: 8          
+      items:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              example: "Ioun Stone of Fortitude"
+            modifier:
+              type: "object"
+              properties:
+                affectedObject:
+                  type: "string"
+                  example: "stats"
+                affectedValue:
+                  type: "string"
+                  example: "constitution"
+                value:
+                  type: "integer"
+                  format: "int64"
+                  example: 2          
+      defenses:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              example: "fire"
+              enum:
+              - "slashing"
+              - "bludgeoning"
+              - "piercing"
+              - "fire"
+              - "cold"
+            defense:
+              type: "string"
+              enum:
+              - "immunity"
+              - "resistance"
+              - "vulnerable"
+              example: "immunity"
+  CharacterHp:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "VlgUNaf-Q"
+      hp:
+        type: "integer"
+        format: "int64"
+        example: 23
+      maxHp:
+        type: "integer"
+        format: "int64"
+        example: 23
+      tempHp:
+        type: "integer"
+        format: "int64"
+        example: 0
+  CharacterHpRequest:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        example: "healing"
+        enum:
+        - "healing"
+        - "slashing"
+        - "bludgeoning"
+        - "piercing"
+        - "fire"
+        - "cold"
+      value:
+        type: "integer"
+        format: "int64"
+        example: 5
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+        example: 404
+      message:
+        type: "string"
+        example: "File not found."

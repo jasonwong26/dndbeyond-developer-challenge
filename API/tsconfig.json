@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    //### compiler behaviors ###
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "es2019",
+
+    //### typescript rules ###
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+
+    //### Output behaviors ###
+    "outDir": "lib",
+    "sourceMap": true,
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*test.ts"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "dndbeyond-challenge-api",
+  "version": "1.0.0",
+  "description": "In this test we would like you to create an API that will manage a player character’s Hit Points(HP). Clients will need to be able to do the following:\r - Deal damage of different types (bludgeoning, fire, etc) while considering character resistences and immunities\r - Heal\r - Add temporary hit points",
+  "scripts": {
+    "prestart": "npm run build",
+    "start": "node lib\\index.js",
+    "test": "jest --config jestconfig.json --watch || exit 0",
+    "test:coverage": "jest --config jestconfig.json --coverage || exit 0",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx || exit 0",
+    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx || exit 0",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "shortid": "^2.2.16"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "@types/jest": "^26.0.20",
+    "@types/shortid": "0.0.29",
+    "@types/sinon": "^9.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.21.0",
+    "eslint-config-prettier": "^8.1.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "sinon": "^9.2.4",
+    "ts-jest": "^26.5.3",
+    "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.2.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "ignorePatterns": [
+      "node_modules/**",
+      "lib/**"
+    ],
+    "rules": {
+      "no-console": "warn",
+      "no-extra-boolean-cast": "warn",
+      "quotes": [
+        "error",
+        "double",
+        {
+          "avoidEscape": true
+        }
+      ],
+      "@typescript-eslint/explicit-function-return-type": "off"
+    }
+  }
+}

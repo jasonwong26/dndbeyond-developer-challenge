@@ -1,0 +1,9 @@
+# environment
+ .DS_Store
+
+# dependencies
+/node_modules
+
+# Dev Resources
+BP_Menu.md
+DevNotes.md
