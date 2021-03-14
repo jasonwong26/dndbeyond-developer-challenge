@@ -1,21 +1,15 @@
-import * as express from "express";
-import * as dotenv from "dotenv";
-import * as colors from "colors";
+import dotenv from "dotenv";
+import colors from "colors";
+import { buildApp } from "./app";
 
+let port = 3000;
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
+  port = parseInt(process.env.PORT || `${port}`);
 }
 
-//Define port
-const port = parseInt(process.env.PORT || "");
-
-//Define request response in root URL (/)
-const app = express();
-app.get("/", function (_, res) {
-  res.send("Hello World!");
-});
-
-//Launch listening server on port 3000
+//Construct and launch
+const app = buildApp();
 app.listen(port, function () {
-  console.log(colors.green(`app listening on port ${port}!`));
+  console.log(colors.green(`app listening on port ${port}! \r\nbrowse at: http://localhost:${port}/`));
 });

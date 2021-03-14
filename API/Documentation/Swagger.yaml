@@ -7,9 +7,8 @@ tags:
 - name: "character"
 schemes:
 - "http"
-- "https"
 paths:
-  /character:
+  /characters:
     post:
       tags:
       - "character"
@@ -33,7 +32,7 @@ paths:
             $ref: "#/definitions/Character"
         "405":
           description: "Invalid input"
-  /character/{characterId}:
+  /characters/{characterId}:
     get:
       tags:
       - "character"
@@ -57,7 +56,7 @@ paths:
           description: "Character not found"
           schema:
             $ref: "#/definitions/ApiResponse"
-  /character/{characterId}/hp:
+  /characters/{characterId}/hp:
     get:
       tags:
       - "character"
@@ -106,11 +105,15 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CharacterHp"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ApiResponse"
         "404":
           description: "Character not found"
           schema:
             $ref: "#/definitions/ApiResponse"
-  /character/{characterId}/hp/updateTemp:
+  /characters/{characterId}/hp/updateTemp:
     post:
       tags:
       - "character"
@@ -136,6 +139,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CharacterHp"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ApiResponse"
         "404":
           description: "Character not found"
           schema:
@@ -159,7 +166,7 @@ definitions:
         type: "integer"
         format: "int64"
         example: 23
-      maxHp:
+      maxhp:
         type: "integer"
         format: "int64"
         example: 23
