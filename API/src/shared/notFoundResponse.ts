@@ -1,5 +1,5 @@
 import {Response} from "express";
-import * as Types from "../shared";
+import * as Types from "../types";
 
 export const respondNotFound = (response: Response): void => {
   const output: Types.ApiResponse = {

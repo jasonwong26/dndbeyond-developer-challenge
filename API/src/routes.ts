@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { InMemoryDataService } from "./utility";
 import { buildRouter } from "./characters";
-import { notFound } from "./errors";
+import { notFound } from "./shared";
 
 const storageService = new InMemoryDataService();
 const characterRouter = buildRouter(storageService);

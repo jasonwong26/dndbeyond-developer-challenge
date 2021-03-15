@@ -1,7 +1,9 @@
-import * as Types from "../shared";
+import debug from "debug";
+import * as Types from "../types";
 import * as Map from "../mapping";
-import { respondNotFound } from "../errors";
+import { respondNotFound } from "../shared";
 
+const log = debug("characters/getCharacterHp");
 export const getCharacterHp: Types.InjectedHandler = (service) => async (request, response, next) => {
   try {
     const key = request.params.characterId;
@@ -13,10 +15,11 @@ export const getCharacterHp: Types.InjectedHandler = (service) => async (request
     }
 
     const hp = Map.toCharacterHp(character);
+
     response.json(hp);
   }
   catch (error) {
-    console.log(error);
+    log("error", error);
     next(error)
   }
 }

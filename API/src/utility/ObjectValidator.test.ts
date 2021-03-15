@@ -1,5 +1,5 @@
 import clonedeep from "lodash.clonedeep";
-import * as Types from "../shared";
+import * as Types from "../types";
 import { parseExact } from "./ObjectValidator";
 
 describe("type validation", () => {

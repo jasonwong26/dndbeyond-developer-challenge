@@ -1,4 +1,4 @@
-import * as Types from "../shared";
+import * as Types from "../types";
 
 // TODO: add documentation
 

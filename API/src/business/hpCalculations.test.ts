@@ -1,7 +1,7 @@
 import clonedeep from "lodash.clonedeep"
 
 import * as Types from "../shared";
-import * as Helper from "./helperFunctions";
+import * as Helper from "./hpCalculations";
 
 describe("Helper Functions", () => {
   // base model used for testing

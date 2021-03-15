@@ -1,4 +1,4 @@
-import * as Types from "../shared";
+import * as Types from "../types";
 
 // Rules:
 //  Hp total equals sum of:

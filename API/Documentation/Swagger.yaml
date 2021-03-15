@@ -9,11 +9,33 @@ schemes:
 - "http"
 paths:
   /characters:
+    get:
+      tags:
+      - "character"
+      summary: "get all characters"
+      operationId: "getCharacters"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Character"
+        "204":
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/ApiResponse"  
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/ApiResponse"
     post:
       tags:
       - "character"
       summary: "Create a character"
-      operationId: "addCharacter"
+      operationId: "createCharacter"
       consumes:
       - "application/json"
       produces:
@@ -30,14 +52,20 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Character"
-        "405":
-          description: "Invalid input"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/ApiResponse"
   /characters/{characterId}:
     get:
       tags:
       - "character"
       summary: "get a character by ID"
-      operationId: "getCharacterById"
+      operationId: "getCharacter"
       produces:
       - "application/json"
       parameters:
@@ -54,6 +82,10 @@ paths:
             $ref: "#/definitions/Character"
         "404":
           description: "Character not found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "500":
+          description: "Server Error"
           schema:
             $ref: "#/definitions/ApiResponse"
   /characters/{characterId}/hp:
@@ -80,10 +112,14 @@ paths:
           description: "Character not found"
           schema:
             $ref: "#/definitions/ApiResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/ApiResponse"
     post:
       tags:
       - "character"
-      summary: "update a character's HP"
+      summary: "apply a change to character HP (healing, damage, etc.)"
       operationId: "updateCharacterHp"
       produces:
       - "application/json"
@@ -99,7 +135,7 @@ paths:
         description: "Request to update Character's hp"
         required: true
         schema:
-          $ref: "#/definitions/CharacterHpRequest"
+          $ref: "#/definitions/UpdateHpRequest"
       responses:
         "200":
           description: "successful operation"
@@ -113,12 +149,53 @@ paths:
           description: "Character not found"
           schema:
             $ref: "#/definitions/ApiResponse"
-  /characters/{characterId}/hp/updateTemp:
-    post:
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+    put:
       tags:
       - "character"
-      summary: "update a character's Temp HP"
-      operationId: "updateCharacterTempHp"
+      summary: "set a character's HP to the specified value"
+      operationId: "setCharacterHp"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "characterId"
+        in: "path"
+        description: "ID of character's HP to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        description: "Request to update Character's hp"
+        required: true
+        schema:
+          $ref: "#/definitions/SetHpRequest"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CharacterHp"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "404":
+          description: "Character not found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  /characters/{characterId}/hp/updateTemp:
+    put:
+      tags:
+      - "character"
+      summary: "set a character's Temp HP to the specified value"
+      operationId: "setCharacterTempHp"
       produces:
       - "application/json"
       parameters:
@@ -133,7 +210,7 @@ paths:
         description: "Request to update Character's Temp hp"
         required: true
         schema:
-          $ref: "#/definitions/CharacterHpRequest"
+          $ref: "#/definitions/SetTempHpRequest"
       responses:
         "200":
           description: "successful operation"
@@ -145,6 +222,10 @@ paths:
             $ref: "#/definitions/ApiResponse"
         "404":
           description: "Character not found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "500":
+          description: "Server Error"
           schema:
             $ref: "#/definitions/ApiResponse"
 
@@ -174,94 +255,27 @@ definitions:
         type: "integer"
         format: "int64"
         example: 0
-
       classes:
         type: "array"
         items:
-          type: "object"
-          properties:
-            name:
-              type: "string"
-              example: "fighter"
-            hitDiceValue:
-              type: "integer"
-              format: "int64"
-              example: 10
-            classLevel:
-              type: "integer"
-              format: "int64"
-              example: 3
-      stats:
-        type: "object"
-        properties:
-          strength:
-            type: "integer"
-            format: "int64"
-            example: 15          
-          dexterity:
-            type: "integer"
-            format: "int64"
-            example: 12          
-          constitution:
-            type: "integer"
-            format: "int64"
-            example: 14          
-          intelligence:
-            type: "integer"
-            format: "int64"
-            example: 13          
-          wisdom:
-            type: "integer"
-            format: "int64"
-            example: 10          
-          charisma:
-            type: "integer"
-            format: "int64"
-            example: 8          
+          $ref: "#/definitions/CharacterClass"
+      stats: 
+        $ref: "#/definitions/CharacterAttributes"
       items:
         type: "array"
-        items:
-          type: "object"
-          properties:
-            name:
-              type: "string"
-              example: "Ioun Stone of Fortitude"
-            modifier:
-              type: "object"
-              properties:
-                affectedObject:
-                  type: "string"
-                  example: "stats"
-                affectedValue:
-                  type: "string"
-                  example: "constitution"
-                value:
-                  type: "integer"
-                  format: "int64"
-                  example: 2          
+        items: 
+          $ref: "#/definitions/CharacterItem"
       defenses:
         type: "array"
-        items:
-          type: "object"
-          properties:
-            type:
-              type: "string"
-              example: "fire"
-              enum:
-              - "slashing"
-              - "bludgeoning"
-              - "piercing"
-              - "fire"
-              - "cold"
-            defense:
-              type: "string"
-              enum:
-              - "immunity"
-              - "resistance"
-              - "vulnerable"
-              example: "immunity"
+        items: 
+          $ref: "#/definitions/CharacterDefense"
   CreateCharacterRequest:
     type: "object"
+    required:
+      - name
+      - level
+      - classes
+      - stats
     properties:
       name:
         type: "string"
@@ -273,88 +287,107 @@ definitions:
       classes:
         type: "array"
         items:
-          type: "object"
-          properties:
-            name:
-              type: "string"
-              example: "fighter"
-            hitDiceValue:
-              type: "integer"
-              format: "int64"
-              example: 10
-            classLevel:
-              type: "integer"
-              format: "int64"
-              example: 3
-      stats:
-        type: "object"
-        properties:
-          strength:
-            type: "integer"
-            format: "int64"
-            example: 15          
-          dexterity:
-            type: "integer"
-            format: "int64"
-            example: 12          
-          constitution:
-            type: "integer"
-            format: "int64"
-            example: 14          
-          intelligence:
-            type: "integer"
-            format: "int64"
-            example: 13          
-          wisdom:
-            type: "integer"
-            format: "int64"
-            example: 10          
-          charisma:
-            type: "integer"
-            format: "int64"
-            example: 8          
+          $ref: "#/definitions/CharacterClass"
+      stats: 
+        $ref: "#/definitions/CharacterAttributes"
       items:
         type: "array"
-        items:
-          type: "object"
-          properties:
-            name:
-              type: "string"
-              example: "Ioun Stone of Fortitude"
-            modifier:
-              type: "object"
-              properties:
-                affectedObject:
-                  type: "string"
-                  example: "stats"
-                affectedValue:
-                  type: "string"
-                  example: "constitution"
-                value:
-                  type: "integer"
-                  format: "int64"
-                  example: 2          
+        items: 
+          $ref: "#/definitions/CharacterItem"
       defenses:
         type: "array"
-        items:
-          type: "object"
-          properties:
-            type:
-              type: "string"
-              example: "fire"
-              enum:
-              - "slashing"
-              - "bludgeoning"
-              - "piercing"
-              - "fire"
-              - "cold"
-            defense:
-              type: "string"
-              enum:
-              - "immunity"
-              - "resistance"
-              - "vulnerable"
-              example: "immunity"
+        items: 
+          $ref: "#/definitions/CharacterDefense"
+  CharacterClass:
+    type: "object"
+    required:
+      - name
+      - hitDiceValue
+      - classLevel
+    properties:
+      name:
+        type: "string"
+        example: "fighter"
+      hitDiceValue:
+        type: "integer"
+        format: "int64"
+        example: 10
+      classLevel:
+        type: "integer"
+        format: "int64"
+        example: 3
+  CharacterAttributes:
+    type: "object"
+    required:
+        - strength
+        - dexterity
+        - constitution
+        - intelligence
+        - wisdom
+        - charisma
+    properties:
+      strength:
+        type: "integer"
+        format: "int64"
+        example: 15          
+      dexterity:
+        type: "integer"
+        format: "int64"
+        example: 12          
+      constitution:
+        type: "integer"
+        format: "int64"
+        example: 14          
+      intelligence:
+        type: "integer"
+        format: "int64"
+        example: 13          
+      wisdom:
+        type: "integer"
+        format: "int64"
+        example: 10          
+      charisma:
+        type: "integer"
+        format: "int64"
+        example: 8          
+  CharacterItem:
+    type: "object"
+    required:
+      - name
+      - modifier
+    properties:
+      name:
+        type: "string"
+        example: "Ioun Stone of Fortitude"
+      modifier:
+        type: "object"
+        required:
+        - affectedObject
+        - affectedValue
+        - value
+        properties:
+          affectedObject:
+            type: "string"
+            example: "stats"
+          affectedValue:
+            type: "string"
+            example: "constitution"
+          value:
+            type: "integer"
+            format: "int64"
+            example: 2 
+  CharacterDefense:
+    type: "object"
+    required:
+      - type
+      - defense
+    properties:
+      type:
+        type: "string"
+        example: "fire"
+      defense:
+        type: "string"
+        example: "immunity"
   CharacterHp:
     type: "object"
     properties:
@@ -373,30 +406,45 @@ definitions:
         type: "integer"
         format: "int64"
         example: 0
-  CharacterHpRequest:
+  UpdateHpRequest:
     type: "object"
+    required:
+      - type
+      - value
     properties:
       type:
         type: "string"
         example: "healing"
-        enum:
-        - "healing"
-        - "slashing"
-        - "bludgeoning"
-        - "piercing"
-        - "fire"
-        - "cold"
       value:
         type: "integer"
         format: "int64"
         example: 5
+  SetHpRequest:
+    type: "object"
+    required:
+      - value
+    properties:
+      value:
+        type: "integer"
+        format: "int64"
+        example: 23
+  SetTempHpRequest:
+    type: "object"
+    required:
+      - value
+      - override
+    properties:
+      value:
+        type: "integer"
+        format: "int64"
+        example: 5
+      override:
+        type: "boolean"
+        description: "overrides default temp hp behavior (retains current value exceeds request)"
+        example: false
   ApiResponse:
     type: "object"
     properties:
-      code:
-        type: "integer"
-        format: "int32"
-        example: 404
       message:
         type: "string"
-        example: "File not found."
+        example: "Error message."

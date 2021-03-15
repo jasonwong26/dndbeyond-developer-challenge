@@ -1,0 +1,1 @@
+export { calculateFixedHp, calculateHpChange, applyHpChange, calculateNewTempHp } from "./hpCalculations";

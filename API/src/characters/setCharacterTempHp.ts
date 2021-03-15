@@ -1,7 +1,10 @@
-import * as Types from "../shared";
+import debug from "debug";
+import * as Types from "../types";
 import * as Map from "../mapping";
-import { parseExact, calculateNewTempHp } from "../utility";
+import { calculateNewTempHp } from "../business"
+import { parseExact } from "../utility";
 
+const log = debug("characters/setCharacterHp");
 export const setCharacterTempHp: Types.InjectedHandler = (service) => async (request, response, next) => {
   try {
     // validate input model
@@ -31,7 +34,7 @@ export const setCharacterTempHp: Types.InjectedHandler = (service) => async (req
     response.json(hp);
   }
   catch (error) {
-    console.log(error);
+    log("error", error);
     if (error.name === "ValidationError") {
       const output: Types.ApiResponse = {
         message: `Bad Request. ${error.message}`

@@ -1,5 +1,5 @@
 import * as ts from "io-ts";
-import * as Types from "../shared";
+import * as Types from "../types";
 import { pipe } from "fp-ts/lib/pipeable"
 import { left } from "fp-ts/lib/Either";
 import { fold } from "fp-ts/lib/Either"

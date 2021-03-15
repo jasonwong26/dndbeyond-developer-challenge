@@ -1,4 +1,4 @@
-import { CreateCharacterRequest } from "./Types";
+import { CreateCharacterRequest } from "./Models";
 
 export interface Character extends CreateCharacterRequest {
   id: string,

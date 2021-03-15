@@ -1,7 +1,9 @@
-import * as Types from "../shared";
-import { respondNoContent } from "../errors";
+import debug from "debug";
+import * as Types from "../types";
+import { respondNoContent } from "../shared";
 
-export const getCharacters: Types.InjectedHandler = (service) => async (request, response, next) => {
+const log = debug("characters/getCharacters");
+export const getCharacters: Types.InjectedHandler = (service) => async (_, response, next) => {
   try {
     const characters = await service.list<Types.Character>()
       .then(l => l.sort((a, b) => {
@@ -20,7 +22,7 @@ export const getCharacters: Types.InjectedHandler = (service) => async (request,
     response.json(characters);
   }
   catch (error) {
-    console.log(error);
+    log("error", error);
     next(error)
   }
 }

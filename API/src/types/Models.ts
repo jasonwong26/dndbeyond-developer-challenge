@@ -1,4 +1,6 @@
-import ts from "io-ts";
+import * as ts from "io-ts";
+
+// TODO: Add documentation
 
 const HitDiceValuesEnum = ts.union([
   ts.literal(6),
@@ -10,7 +12,7 @@ export type HitDiceValues = ts.TypeOf<typeof HitDiceValuesEnum>
 
 const CharacterClassModel = ts.type({
   name: ts.string,
-  hitDiceValue: HitDiceValuesEnum,
+  hitDiceValue: ts.number,
   classLevel: ts.number
 });
 const CharacterAttributesModel = ts.type({
@@ -20,10 +22,6 @@ const CharacterAttributesModel = ts.type({
   intelligence: ts.number,
   wisdom: ts.number,
   charisma: ts.number
-});
-
-export const NestedCharacterClassModel = ts.type({
-  classes: ts.array(ts.exact(CharacterClassModel))
 });
 
 const CharacterItemModel = ts.type({

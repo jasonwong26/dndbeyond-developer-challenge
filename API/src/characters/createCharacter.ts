@@ -1,10 +1,13 @@
 import shortid from "shortid";
-import * as Types from "../shared";
-import { calculateFixedHp, parseExact } from "../utility";
+import debug from "debug";
+import * as Types from "../types";
+import { calculateFixedHp } from "../business"
+import { parseExact } from "../utility";
 
+const log = debug("characters/createCharacter");
 export const createCharacter: Types.InjectedHandler = (service) => async (request, response, next) => {
   try {
-    console.log("input", {input: request.body});
+    log("input", { input: request.body });
 
     // validate input model
     const input = parseExact(Types.CreateCharacterRequestModel, request.body);
@@ -22,7 +25,7 @@ export const createCharacter: Types.InjectedHandler = (service) => async (reques
     response.json(character);
   }
   catch (error) {
-    console.log(error);
+    log("error", error);
     if (error.name === "ValidationError") {
       const output: Types.ApiResponse = {
         message: `Bad Request. ${error.message}`

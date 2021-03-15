@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ApiResponse } from "../shared";
+import { ApiResponse } from "../types";
 
 export const defaultErrorHandler = (error: Error, _: Request, response: Response): void => {
   const code = 500;

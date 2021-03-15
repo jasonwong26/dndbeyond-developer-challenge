@@ -1,7 +1,7 @@
 import express from "express";
 import { Express } from "express";
 import { configureRoutes } from "./routes";
-import { defaultErrorHandler } from "./errors";
+import { defaultErrorHandler } from "./shared";
 
 export const buildApp = (): Express => {
   const app = express();

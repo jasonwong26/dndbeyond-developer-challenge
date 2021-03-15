@@ -1,6 +1,8 @@
-import * as Types from "../shared";
-import { respondNotFound } from "../errors";
+import debug from "debug";
+import * as Types from "../types";
+import { respondNotFound } from "../shared";
 
+const log = debug("characters/getCharacter");
 export const getCharacter: Types.InjectedHandler = (service) => async (request, response, next) => {
   try {
     const key = request.params.characterId;
@@ -14,7 +16,7 @@ export const getCharacter: Types.InjectedHandler = (service) => async (request, 
     response.json(character);
   }
   catch (error) {
-    console.log(error);
+    log("error", error);
     next(error)
   }
 }
