@@ -1,7 +1,6 @@
 {
-  "name": "ui",
+  "name": "dndbeyond-challenge-ui",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx || exit 0",
     "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx || exit 0",

@@ -1,7 +1,6 @@
 {
   "name": "dndbeyond-challenge-api",
-  "version": "1.0.0",
-  "description": "In this test we would like you to create an API that will manage a player character’s Hit Points(HP). Clients will need to be able to do the following:\r - Deal damage of different types (bludgeoning, fire, etc) while considering character resistences and immunities\r - Heal\r - Add temporary hit points",
+  "version": "0.1.0",
   "scripts": {
     "prestart": "npm run build",
     "start": "node lib/index.js",
