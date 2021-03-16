@@ -1,0 +1,29 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/respond.scss";
+
+.point-summary {
+  background-color: $secondaryBackgroundColor;
+  border: 2px solid $secondaryBorderColor;
+  display: inline-block;
+  font-size: 1.2rem;
+  padding: 15px;
+  text-align: center;
+
+  .points-used {
+    @include respond(sm) {
+      display: inline-block;
+    }
+  }
+
+  .legend {
+    color: $secondaryFontColor;
+
+    @include respond(sm) {
+      &::before {
+        content: "\00a0 ";
+      }
+      display: inline-block;
+    }
+  }
+}
+

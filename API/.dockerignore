@@ -1,0 +1,7 @@
+coverage
+Documentation
+lib
+node_modules
+Reference
+
+npm-debug.log

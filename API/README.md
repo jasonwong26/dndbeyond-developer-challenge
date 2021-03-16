@@ -60,6 +60,9 @@ I elected to only support the standard camelcase convention.  Though this means 
   ]
 ```
 
+I set up a basic in-memory storage class for the API for illustration purposes.
+This is accessed via the `DataService` interface so it can be easily substituted with a more permanent datastore such as DynamoDb.
+
 ## Environment Variables
 The following Environment variables are included for use in the API:
 
@@ -68,3 +71,21 @@ The following Environment variables are included for use in the API:
 
 ## Libraries used
 ### io-ts
+Input request validations are completed via the [io-ts](https://github.com/gcanti/io-ts/blob/HEAD/index.md) library.
+The library provides a useful bridge between Typescript's compile time types and runtime object validation.
+
+The declaration of models can be a bit clunky, but I often find it preferable to handwriting the validations.
+The biggest downside I've found is that the error messages generated for invalid objects are very difficult to parse.
+This can be inspected by looking at the `ValidationError.details` property.  
+However, for the purposes of this exercise I felt the behavior was sufficient.
+
+Relevant files:
+- [types/Models](src/types/Models.ts) - contains declarative models for runtime object validation.
+- [utility/ObjectValidator](src/utility/ObjectValidator.ts) - contains the `parseExact()` method for validating objects.
+
+## Docker
+I have limited experience with Docker, so I have included only a basic implmentation for this project that uses docker-compose to manage the build configuration.
+
+relevant commands:
+`docker-compose up --build` - builds full environment
+`docker-compose down --rmi all` - tears down environment, including created image.

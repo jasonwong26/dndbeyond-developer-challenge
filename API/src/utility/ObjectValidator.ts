@@ -5,9 +5,6 @@ import { left } from "fp-ts/lib/Either";
 import { fold } from "fp-ts/lib/Either"
 import { PathReporter } from "io-ts/lib/PathReporter";
 
-/* TODO: add documentation
- */
-
 export const parseExact = <TsModel extends ts.HasProps>(model: TsModel, input: unknown): ts.TypeOf<TsModel> => {
   const exactValidation = ts.exact(model);
   const result = exactValidation.decode(input);

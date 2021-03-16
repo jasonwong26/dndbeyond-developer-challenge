@@ -1,0 +1,12 @@
+@import "../../../styles/colors.scss";
+
+.talent-tree-title {
+  background-color: $backgroundColor;
+  font-size: 1.2rem;
+  margin-bottom: .5rem;
+  padding: 5px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  margin: 5px;
+}

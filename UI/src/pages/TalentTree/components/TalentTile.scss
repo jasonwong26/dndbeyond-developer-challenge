@@ -1,0 +1,33 @@
+@use "sass:map";
+@import "../../../styles/colors.scss";
+
+$talents: ( "chevron", "silverware", "cake", "crown", "boat", "scuba", "lightning", "skull" );
+
+.talent {
+  background: transparent url("../../../styles/assets/sprites.png") 0 0 no-repeat;
+  height: 58px;
+  width: 58px;
+  display: "block";
+  margin: 5px;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: auto;
+  }
+
+  @each $sprite in $talents {
+    $i: index($talents, $sprite);
+    &.#{$sprite}.active, &.#{$sprite}:hover:enabled {
+      background-position: (-($i - 1) * 50px) 0;
+      border: 4px solid $primaryColor;
+    }
+  }
+
+  @each $sprite in $talents {
+    $i: index($talents, $sprite);
+    &.#{$sprite} {
+      background-position: (-($i - 1) * 50px) -50px;
+      border: 4px solid $borderColor;
+    }
+  }
+}

@@ -1,7 +1,5 @@
 import * as ts from "io-ts";
 
-// TODO: Add documentation
-
 const HitDiceValuesEnum = ts.union([
   ts.literal(6),
   ts.literal(8),

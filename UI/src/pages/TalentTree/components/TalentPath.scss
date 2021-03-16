@@ -1,0 +1,32 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/respond.scss";
+
+.talent-path {
+  .talent-path-talents {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 15px;
+
+    .talent-path-title {
+      display: inline-block;
+      font-size: 0.8rem;
+      margin-right: 15px;
+      text-transform: uppercase;
+      @include respond(sm) {
+        flex-basis: 100%;
+      }
+    }
+
+    .talent-divider {
+      background-color: $backgroundColor;
+      flex-grow: 1;
+      height: 15px;
+      min-width: 30px;
+
+      &.active {
+        background: linear-gradient(90deg, $primaryColor 0%, $backgroundColor 80%);
+      }
+    }
+  }
+}

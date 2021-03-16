@@ -4,7 +4,7 @@
   "description": "In this test we would like you to create an API that will manage a player character’s Hit Points(HP). Clients will need to be able to do the following:\r - Deal damage of different types (bludgeoning, fire, etc) while considering character resistences and immunities\r - Heal\r - Add temporary hit points",
   "scripts": {
     "prestart": "npm run build",
-    "start": "node lib\\index.js",
+    "start": "node lib/index.js",
     "test": "jest --config jestconfig.json --watch || exit 0",
     "test:coverage": "jest --config jestconfig.json --coverage || exit 0",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx || exit 0",

@@ -1,0 +1,41 @@
+@import "../../styles/colors.scss";
+@import "../../styles/respond.scss";
+
+.talent-tree {
+  background-color: $backgroundColor;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: $fontColor;
+  padding: 15px;
+
+  .tree-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-top: 30px;
+    @include respond(sm) {
+      display: block;
+      margin-top: 15px;
+    }
+
+    .summary-wrapper {
+      display: inline-block;
+      padding-left: 30px;
+      padding-right: 30px;
+      @include respond(sm) {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+    
+    .paths-wrapper {
+      flex-basis: auto;
+      flex-grow: 1;
+    }  
+  }
+}
